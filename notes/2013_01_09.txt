@@ -1,0 +1,90 @@
+-------------------------------
+Introduction
+-------------------------------
+
+  Operating Systems
+    Goal 
+      * Convenience for user
+      * Met by acting as control program
+
+    Purpose
+      * Efficient use of system resources
+      * Met by acting as resource manager
+
+
+-------------------------------
+Chapter 1  
+-------------------------------
+  
+  System model
+    * See Figure 1.2 in book
+    * System bus connects all controllers
+    * Direct Memory Access: Any controller can directly access memory
+
+  Interrupts
+    * Control transfer
+    * Similar to function call in main method
+
+    Types
+      * Hardware
+      * Software (Overflow)
+      * Trap / Exception (Fault)
+
+    Servicing
+      1. Recognition
+        * Who sent that interrupt?, what kind is it?
+
+      2. Initiate control transfer
+        * Stop running program and run interrupt code
+        * Handled by Interrupt service vector (ISV) handlers
+
+      3. State
+        * Need info to return to user program (stack, register values)
+
+
+    * An Operating System is really an interrupt-driven control program
+
+
+  Storage Hierarchy
+    * See figure 1.4 in book
+    * Get faster as you move up the hierarchy
+    * Get size as you move down the hierarchy
+    * Get cost as you move up the hierarchy
+
+  Protection
+    * Must protect time and space
+    
+    Time
+      * CPU
+      * Timers
+
+    Space
+      * Memory (Multi-programming -- Multiple programs in memory at one time)
+      * Fences
+
+    Access
+      * Priviledged instructions
+      * Dual-mode operation
+        - Dual mode, user mode
+        - See figure 1.10 in book
+        - System calls
+          -- See figures 2.6, 2.9 in book
+          -- Going through the OS to make operations occur
+
+
+-------------------------------
+Chapter 2  
+-------------------------------
+
+ Operating Systems
+  
+  Management / Services
+    * See figure 2.01
+
+  Layered, Modular Design
+    * Benefit from high level abstraction
+    * See figure 2.13
+
+  Kernel
+    * Ram-resident portion of Operating System
+

@@ -1,0 +1,76 @@
+--------------------
+Process
+--------------------
+
+  * A program in execution
+  * Fundamental unit of work
+
+  * Active
+
+  * State 
+    see figure 3.2 in book
+    -- Running
+      * State after dispatched from ready state
+
+    -- Ready
+      * State after admitted 
+
+    -- Blocked / Waiting
+      * State inbetween CPU consumption
+
+  * Orphan
+    -- Process with no parent
+
+  * Zombie
+    -- Process has finished but parent hasn't acknowledged a finish
+
+
+--------------------
+Process representation
+--------------------
+
+  Process Control Block (PCB)
+    * ID
+      -- PID
+      -- Must be unique
+      -- UID
+
+    * State
+      -- Ready, Running, ... 
+      -- Value of Program Counter
+      -- Value of stack pointer
+      -- Contents of registers
+      -- MINFO = Pointers to memory info
+      -- Scheduling info
+        * Priority
+        * Usage
+
+    * Control
+
+
+--------------------
+Kernal Space Image
+--------------------
+  Kernal Space contains a process table
+
+  A process table contains PCBs
+
+  PCBs contain a UArea
+  
+  UArea contains a page table 
+
+
+--------------------
+User/Process space
+--------------------
+
+  Stack
+    v
+
+  -- Free Spae -- 
+  
+    ^
+  Heap
+  Data
+  Code
+

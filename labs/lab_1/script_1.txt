@@ -1,0 +1,48 @@
+Script started on Thu 10 Jan 2013 01:49:53 PM EST
+[?1034h[eos15:~/CIS_452/labs/lab_1]$ g++ -Wall -g sample_program1.c 
+[eos15:~/CIS_452/labs/lab_1]$ ./a.out 
+Hello, world.
+You are the 268435456.000000 person to write this program!
+[eos15:~/CIS_452/labs/lab_1]$ gdb a.out 
+[?1034hGNU gdb (GDB) Red Hat Enterprise Linux (7.2-56.el6)
+Copyright (C) 2010 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
+and "show warranty" for details.
+This GDB was configured as "x86_64-redhat-linux-gnu".
+For bug reporting instructions, please see:
+<http://www.gnu.org/software/gdb/bugs/>...
+Reading symbols from /home/abelr/CIS_452/labs/lab_1/a.out...done.
+(gdb) b main
+Breakpoint 1 at 0x4005ec: file sample_program1.c, line 6.
+(gdb) run
+Starting program: /home/abelr/CIS_452/labs/lab_1/a.out 
+
+Breakpoint 1, main () at sample_program1.c:6
+6	   double num = 0.0;
+Missing separate debuginfos, use: debuginfo-install glibc-2.12-1.80.el6_3.6.x86_64 libgcc-4.4.6-4.el6.x86_64 libstdc++-4.4.6-4.el6.x86_64
+(gdb) p num
+$1 = 0
+(gdb) n
+7	   printf ("Hello, world.\n");
+(gdb) n
+Hello, world.
+8	   num = pow(2, 28);
+(gdb) p num
+$2 = 0
+(gdb) n
+9	   printf ("You are the %f person to write this program!\n", num);
+(gdb) p num
+$3 = 268435456
+(gdb) done
+Undefined command: "done".  Try "help".
+(gdb) quit
+A debugging session is active.
+
+	Inferior 1 [process 4488] will be killed.
+
+Quit anyway? (y or n) y
+[eos15:~/CIS_452/labs/lab_1]$ exit
+
+Script done on Thu 10 Jan 2013 01:52:14 PM EST

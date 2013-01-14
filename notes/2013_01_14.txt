@@ -1,0 +1,26 @@
+-------------------
+Process operations
+-------------------
+
+  * Create/Spawn by parent
+    -- fork()
+      * create an exact copy of the parent process in a new address space
+      * returns:
+        -- 0: to child
+        -- < 0: error
+        -- CHILD_PID to parent
+
+  * Execute
+    -- exec()
+      * Replaces code & data area with new program & executes it.
+    -- Program overlay
+      * Overwrite copy of parent program
+
+  * Blocking
+    -- wait()
+      * Wait for child process to terminate
+
+  * Termination
+    -- exit()
+      * Terminate and return to parent process
+    -- Deallocation of resources

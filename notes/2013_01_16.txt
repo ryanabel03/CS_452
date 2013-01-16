@@ -1,0 +1,16 @@
+------------------
+Process scheduling
+------------------
+
+  Goal:
+    * Efficiency
+    * High utilization of CPU
+
+  Parallelize processes P1 & P0
+    CPU   | P0  P1   P0   P1
+          |----|----|----|----|----|   ---- = 1 time unit
+    I/O   |     P0   P1   P0   P1
+
+  Context Switch:
+    * see figure 3.4 in book
+    * Moving processes on and off of CPU

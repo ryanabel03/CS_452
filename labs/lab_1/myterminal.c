@@ -14,7 +14,16 @@ int main() {
 
   rows = tigetnum("lines");
   cols = tigetnum("cols");
-  printf("ROWS: %d \t COLUMNS: %d \n", rows, cols);
+  printf("ROWS: %d \t COLUMNS: %d", rows, cols);
+
+  char *moveCursor = tigetstr("cup");
+  char *translateMove = tparm(moveCursor, 10, 3);
+  putp(translateMove);
+  printf("I am here!!");
+
+  char *translateMove2 = tparm(moveCursor, 26, 9);
+  putp(translateMove2);
+  printf("Now I am here!");
 
   return 0;
 }

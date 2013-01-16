@@ -3,27 +3,37 @@
 #include <curses.h>
 #include <stdlib.h>
 
-int main() {
-  int rows, cols;
+void moveCursor(int row, int column) {
+  char *moveCursor = tigetstr("cup");
+  char *translateMove = tparm(moveCursor, row, column);
+  putp(translateMove);
+  printf("I am here!!");
+}
 
-  setupterm(NULL, fileno(stdout), (int *)0);
-
+void clearAndHome() {
   char *clearSequence = tigetstr("clear");
   char *clearAndHome = tparm(clearSequence);
   putp(clearAndHome);
+}
+
+void showRowsAndColumns() {
+  int rows, cols;
 
   rows = tigetnum("lines");
   cols = tigetnum("cols");
   printf("ROWS: %d \t COLUMNS: %d", rows, cols);
+}
 
-  char *moveCursor = tigetstr("cup");
-  char *translateMove = tparm(moveCursor, 10, 3);
-  putp(translateMove);
-  printf("I am here!!");
+int main() {
 
-  char *translateMove2 = tparm(moveCursor, 26, 9);
-  putp(translateMove2);
-  printf("Now I am here!");
+  setupterm(NULL, fileno(stdout), (int *)0);
+
+  clearAndHome();
+
+  showRowsAndColumns();
+
+  moveCursor(10, 3);
+  moveCursor(28, 9);
 
   return 0;
 }

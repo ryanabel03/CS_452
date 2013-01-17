@@ -2,12 +2,13 @@
 #include <term.h>
 #include <curses.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 void moveCursor(int row, int column) {
   char *moveCursor = tigetstr("cup");
-  char *translateMove = tparm(moveCursor, row, column);
+  char *translateMove = tparm(moveCursor, column, row);
   putp(translateMove);
-  printf("I am here!!");
+  printf("I am here!!\n");
 }
 
 void clearAndHome() {
@@ -32,8 +33,9 @@ int main() {
 
   showRowsAndColumns();
 
-  moveCursor(10, 3);
   moveCursor(28, 9);
+  sleep(3);
+  moveCursor(10, 3);
 
   return 0;
 }

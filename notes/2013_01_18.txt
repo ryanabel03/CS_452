@@ -1,0 +1,66 @@
+---------------------
+Interprocess communication
+---------------------
+
+  Communication structure
+
+  send()
+
+  recv()
+
+  Adressing
+    * Indirect
+      -- Service
+      -- send(service, msg)
+    * Direct
+      -- Name
+      -- send(Process, msg)
+
+  Naming
+    * Symmetric
+      -- Both named
+      -- send(p1, msg)  recv(p0, &msg)
+
+    * Asymmetric
+      -- Only one process is named
+      -- send(p1, msg)  recv(*, &msg)
+
+  Timing
+    * Synchronous
+      -- Know where we are in code when this communication occurs
+      -- Blocking
+        * If a process sends before the receiver is ready, the sender will block
+
+    * Asynchronous
+      -- System must be buffering
+
+
+---------------------
+Shared memory
+---------------------
+
+  Use global address space
+    * Programmer managed
+
+  * Fastest communication
+
+
+---------------------
+Signals
+---------------------
+  * Software interrupt
+
+  * Processor specifies/registers signal handling function
+    -- When you get this signal execute this handler code
+
+  * Can only signal members of process group
+
+  * Predefined signals
+    -- SIGINT
+    -- SIGKILL
+    -- SIGCHLD
+    -- SIGUSR1
+    -- SIGUSR2
+
+  * Some can be overwritten 
+

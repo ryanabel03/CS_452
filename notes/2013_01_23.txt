@@ -1,0 +1,32 @@
+--------------------
+Pipes
+--------------------
+  * Unidirectional synchronized communication
+
+  *OS maintains 4KB circular buffer
+
+  Streamed:
+    * Information is ordered
+    * Reliable
+    * Messaging is guaranteed
+
+  Synchronized:
+    * Can't read from an empty pipe
+    * Can't write to a full pipe
+
+  * Hooking up one program as input to another (ls | grep)
+
+  mkfifo
+    * persistent pipe
+
+
+--------------------
+Sockets
+--------------------
+  * Communication endpoint
+
+  Types:
+    * Stream
+    * Datagram
+
+

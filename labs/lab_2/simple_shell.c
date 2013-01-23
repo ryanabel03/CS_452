@@ -19,10 +19,9 @@ int main() {
 
     printf("Prompt: ");
     fgets(line, 100, stdin);
+    line[strlen(line) - 1] = '\0';
     command = strtok(line, " ");
     flags = strtok(NULL, " ");
-
-    command[strlen(command) - 1] = '\0';
 
     fullCommand[0] = command;
     fullCommand[1] = flags;
@@ -38,7 +37,7 @@ int main() {
       exit(1);
     }
     else if (pid == 0) {
-      if(execvp(fullCommand[0], fullCommand) < 0) {
+      if(execvp(fullCommand[0], &fullCommand[0]) < 0) {
         perror("Command execution failed.");
         exit(1);
       } else {

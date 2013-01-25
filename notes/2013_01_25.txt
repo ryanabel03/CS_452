@@ -1,0 +1,37 @@
+------------------------
+Threads
+------------------------
+  * Path of execution through a program
+  * Lightweight process
+
+  Model:
+    -- see figure 4.10 in book
+
+  Purposes
+    * Overlap I/O with computation
+    * Foreground & Background processing
+    * Program structure
+    * Performance
+      -- Multithreaded <=> Multi-core
+
+
+------------------------
+Threads vs processes
+------------------------
+  Process: Unit of resource ownership (mem, dev, files)
+
+  Thread: Unit of work (Execution path through a process)
+
+  Process
+    * Address space
+    * Globals
+    * Files
+    * Signals
+    * Child
+
+  Thread
+    * Program counter
+    * Registers
+    * Stack
+    * State
+    * Child

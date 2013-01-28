@@ -1,0 +1,70 @@
+----------------------
+Benefits of threads
+----------------------
+  * Faster to create
+  * Faster to context switch
+  * Faster to destory
+
+  * Threads can block
+    -- Time share the CPU
+
+
+  * Example: Multi-Threaded File Server
+    -- Worker threads can search for different files at the same time.
+    -- "Hiding the latency"
+
+  * Pool of workers
+    -- Master/Slave
+      * Master delegates work to slaves
+    -- Pipeline
+
+
+----------------------
+Thread implementation
+----------------------
+
+  User Level:
+    * Threads live and sit on top of a runtime library
+    * Threads are spawned off from another thread
+    * Many processes to one kernel
+    
+    Benefits:
+      * Any Operating System
+      * Fast management
+
+    Cons:
+      * No kernel scheduling
+      * If one thread blocks, the entire process will block 
+
+  Kernel level:
+    * Kernel is aware of a processes threads
+    * One process to one kernel
+
+    Benefits:
+      * Kernel scheduling
+      * Handles blocking() calls
+
+    Cons:
+      * Slower system call management
+      * Operating System dependent
+
+  Hybrid:
+    * Many proccesses (through a VM) to many kernels
+
+
+----------------------
+Thread lifestyle
+----------------------
+  * Creation
+    -- Spawned from existing thread
+    -- Designate new threads starting point
+
+  * Execution
+    -- Can have state of running, ready, blocked
+
+  * Termination
+    -- Thread returns to parent
+      * Detach
+        -- Don't return to parent
+      * Exit
+        -- return to parent

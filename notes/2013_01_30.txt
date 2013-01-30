@@ -1,0 +1,45 @@
+---------------------
+CPU scheduling
+---------------------
+  * Goal is to increase performance (higher throughput)
+
+  * Talking about short term scheduler (aka Dispatcher):
+
+  Review Process characteristics
+    -- Alternating CPU - I/O bursts
+
+    -- CPU burst duration
+      * see figure 5.2 in book
+      * very very short
+
+    -- Process / Burst Relationship
+
+
+---------------------
+Scheduling criteria
+---------------------
+  
+  CPU utilization:
+    * % of time CPU is busy executing user processes 
+    * typically 40 - 80%
+
+  Throughput:
+    * Number of processes completed in a unit of time
+
+  Turnaround time:
+    * Time for a particular job to complete (use system avg)
+    * = ProcessCompletionTime - ProcessArrivalTime
+    * Normalized Time = TurnaroundTime / CPU Burst Time
+
+  Waiting time:
+    * Amount of time the process is in the ready queue (use system avg)
+
+  Compute bound process:
+    * The process is being bottled necked due to computation
+    * Waiting time = Turanround time - CPU Burst Time
+
+
+---------------------
+Preemption
+---------------------
+  * A process that can be interrupted

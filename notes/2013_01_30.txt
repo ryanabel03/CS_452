@@ -40,7 +40,7 @@ Scheduling criteria
 
 
 ---------------------
-Preemption
+Non Pre-emptive
 ---------------------
   * A process that can be interrupted
 
@@ -56,5 +56,4 @@ Preemption
     * Ready Queue
     * Order by priority
       -- Lower # == Higher Priority
-
 

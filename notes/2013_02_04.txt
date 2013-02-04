@@ -1,0 +1,78 @@
+------------------------
+First come first served
+------------------------
+  * FIFO
+
+  Benefits:
+    * Easy to implement
+    * Fair
+
+  Cons:
+    * Poor performance
+    * Convoy effect
+      -- Waiting time is increased if many short processes must wait for a long process to finish
+
+
+------------------------
+Shortest job first
+------------------------
+
+  Benefits:
+    * Optimal
+
+  Cons:
+    * Impossible to implement
+      -- Can't predict CPU bursts so they can't be ordered
+
+  Possible Implementations
+
+  1. Comparison
+
+  2. Heuristic
+    T(i) = measured time of ith burst
+    R(i) = Predicted time ith burst
+    C = Relative weight of past/present, 0 <= C <= 1 
+
+    Running Avg: R(i + 1) = (1/n) * sum(T(i))
+
+    Exponential Avg: R(n + 1) = C * T(n) + (1 - C) * R(n) 
+      * C = 1:      R(n + 1) = T(n) -- Last Burst
+      * C = 0:      R(n + 1) = R(n) -- Overall avg
+      * C = (1/2)
+          1. T(0)
+          2. T(1) / 2 + T(0) / 2
+          3. T(2)/ 2 + (T(1) / 4 + T(0) / 4)
+          4. T(3)/ 2 + (T(2) / 4 + T(1) / 8 + T(0) / 8)
+
+
+------------------------
+Priority
+------------------------
+  * Smallest # == Highest Priority
+  * PID is tiebreaker
+
+  Benefits:
+
+  Cons:
+    * Starvation
+      -- low priority processes may never be executed
+      -- Solved by gradually increasing priority of starving process (Aging)
+
+
+------------------------
+Round Robin
+------------------------
+  * First come first served with pre-emption
+
+
+
+------------------------
+Shortest remaining time first
+------------------------
+  * Shortest job first with pre-emption
+
+
+------------------------
+Pre-emptive priority
+------------------------
+  * Priority with pre-emption

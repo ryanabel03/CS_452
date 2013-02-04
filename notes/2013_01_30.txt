@@ -43,3 +43,18 @@ Scheduling criteria
 Preemption
 ---------------------
   * A process that can be interrupted
+
+  First Come First Served (FCFS)
+    * FIFO
+    * Ordered
+
+  Shortest Job First
+    * Ready Queue
+    * Orderd by Increasing CPU Burst Time
+
+  Priority
+    * Ready Queue
+    * Order by priority
+      -- Lower # == Higher Priority
+
+

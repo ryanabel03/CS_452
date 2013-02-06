@@ -63,6 +63,8 @@ Priority
 Round Robin
 ------------------------
   * First come first served with pre-emption
+  * Ready queue now functions as circular queue
+    -- Quantums: Each process gets CPU for q units of time
 
 
 
@@ -70,9 +72,11 @@ Round Robin
 Shortest remaining time first
 ------------------------
   * Shortest job first with pre-emption
+  * CPU to process with least remaining burst
 
 
 ------------------------
 Pre-emptive priority
 ------------------------
   * Priority with pre-emption
+  * CPU processes highest priority process first

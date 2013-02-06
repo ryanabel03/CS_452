@@ -3,6 +3,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <signal.h>
+
+int filesRequested = 0;
 
 void* processFile(void* arg) {
   char* file = arg;
@@ -10,12 +13,23 @@ void* processFile(void* arg) {
   return arg;
 }
 
+static void printStatsAndClose(int signo) {
+  printf("\nReceived %d file requests\n", filesRequested);
+  printf("Shutting down... <ENTER>\n");
+  kill(getpid(), SIGTERM);
+
+  getchar();
+  exit(0);
+}
+
 void* getFileFromUser(void* arg) {
-  int filesRequested = 0;
   while(1) {
-    //TODO: ADD SIGNAL HANDLER
     pthread_t childThread;
     int status;
+
+    if(signal(SIGINT, printStatsAndClose) == SIG_ERR) {
+      perror("Could not gracefully shut down");
+    }
 
     char line[200];
     char* file;
@@ -35,28 +49,25 @@ void* getFileFromUser(void* arg) {
 
     pthread_detach(childThread);
   }
-  return (void *) filesRequested;
+  return NULL;
 }
 
 int main() {
   pthread_t dispatchThread;
   int status;
 
-  void* filesRequested = NULL;
-
-
   if((status = pthread_create(&dispatchThread, NULL, getFileFromUser, NULL)) != 0) {
     fprintf(stderr, "error on thread creation, status: %d", status);
     exit(1);
   }
 
-  if((status = pthread_join(dispatchThread, &filesRequested)) != 0) {
+  if((status = pthread_join(dispatchThread, NULL)) != 0) {
     fprintf(stderr, "error on thread join, status: %d", status);
     exit(1);
   }
 
-  int requests = (int) filesRequested;  
+  printf("WTF?");
 
-  printf("# of requests %d", requests);
+
   return 0;
 }

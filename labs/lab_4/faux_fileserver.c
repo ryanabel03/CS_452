@@ -6,16 +6,35 @@
 #include <signal.h>
 
 int filesRequested = 0;
+float fileAccessTime = 0;
 
 void* processFile(void* arg) {
   char* file = arg;
+
+  int num = rand() % 5;
+  int sleepTime = 0;
+  if(num == 1) {
+    sleepTime = rand() % 10 + 7;
+    fileAccessTime += sleepTime;
+    sleep(sleepTime);
+    printf("\nFile %s was not found.\n", file);
+    fflush(stdout);
+  } else {
+    fileAccessTime += 1.0;
+    sleep(1);
+    printf("\nFile %s found!\n", file);
+    fflush(stdout);
+  }
 
   return arg;
 }
 
 static void printStatsAndClose(int signo) {
-  printf("\nReceived %d file requests\n", filesRequested);
-  printf("Shutting down... <ENTER>\n");
+  printf("\nShutting down...\n\n");
+  printf("SUMMARY:\n");
+  printf("\tReceived %d file requests\n", filesRequested);
+  printf("Average file access time was: %2.f seconds", fileAccessTime / filesRequested);
+  fflush(stdout);
   kill(getpid(), SIGTERM);
 
   getchar();
@@ -23,6 +42,7 @@ static void printStatsAndClose(int signo) {
 }
 
 void* getFileFromUser(void* arg) {
+
   while(1) {
     pthread_t childThread;
     int status;
@@ -31,9 +51,10 @@ void* getFileFromUser(void* arg) {
       perror("Could not gracefully shut down");
     }
 
+    printf("Enter File Name: ");
     char line[200];
     char* file;
-    printf("Enter File Name: ");
+    fflush(stdout);
 
     fgets(line, 200, stdin);
     line[strlen(line) - 1] = '\0';

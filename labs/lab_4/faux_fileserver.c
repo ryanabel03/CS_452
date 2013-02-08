@@ -1,3 +1,9 @@
+/*
+ * Threading Exercise
+ *
+ * Author: Ryan Abel, Corey Jones
+ */
+
 #include <stdio.h>
 #include <pthread.h>
 #include <stdlib.h>
@@ -9,20 +15,22 @@ int filesRequested = 0;
 float fileAccessTime = 0;
 
 void* processFile(void* arg) {
-  char* file = arg;
+  char* file = (char *) arg;
 
   int num = rand() % 5;
   int sleepTime = 0;
   if(num == 1) {
-    sleepTime = rand() % 10 + 7;
+    sleepTime = rand() % 4 + 7;
     fileAccessTime += sleepTime;
     sleep(sleepTime);
     printf("\nFile %s was not found.\n", file);
+    printf("Enter File Name: ");
     fflush(stdout);
   } else {
     fileAccessTime += 1.0;
     sleep(1);
     printf("\nFile %s found!\n", file);
+    printf("Enter File Name: ");
     fflush(stdout);
   }
 
@@ -33,7 +41,7 @@ static void printStatsAndClose(int signo) {
   printf("\nShutting down...\n\n");
   printf("SUMMARY:\n");
   printf("\tReceived %d file requests\n", filesRequested);
-  printf("Average file access time was: %2.f seconds", fileAccessTime / filesRequested);
+  printf("\tAverage file access time was: %2.f seconds\n", fileAccessTime / filesRequested);
   fflush(stdout);
   kill(getpid(), SIGTERM);
 
@@ -47,13 +55,15 @@ void* getFileFromUser(void* arg) {
     pthread_t childThread;
     int status;
 
+
     if(signal(SIGINT, printStatsAndClose) == SIG_ERR) {
       perror("Could not gracefully shut down");
     }
 
-    printf("Enter File Name: ");
     char line[200];
     char* file;
+
+    printf("Enter File Name: ");
     fflush(stdout);
 
     fgets(line, 200, stdin);
@@ -69,6 +79,7 @@ void* getFileFromUser(void* arg) {
     filesRequested++;
 
     pthread_detach(childThread);
+
   }
   return NULL;
 }
@@ -76,6 +87,8 @@ void* getFileFromUser(void* arg) {
 int main() {
   pthread_t dispatchThread;
   int status;
+
+	srand(time(NULL));
 
   if((status = pthread_create(&dispatchThread, NULL, getFileFromUser, NULL)) != 0) {
     fprintf(stderr, "error on thread creation, status: %d", status);
@@ -86,9 +99,6 @@ int main() {
     fprintf(stderr, "error on thread join, status: %d", status);
     exit(1);
   }
-
-  printf("WTF?");
-
 
   return 0;
 }

@@ -1,0 +1,60 @@
+-----------------------
+Multi-level Queue
+-----------------------
+  * Partition ready queue
+  * Fixed priority
+    -- System priority is highest, batch is lowest
+
+
+  Ready Queue contains:
+    -- System Queue
+    -- Interactive Queue
+    -- Batch Queue
+
+  * Send jobs from ready queue into CPU
+
+  Cons:
+    * Starvation for Batch jobs
+
+
+-----------------------
+Multi-level feeback Queue
+-----------------------
+  * Processes can move amongst queues
+  * Dynamic priority
+
+  How it works:
+    -- Job enters at highest priority
+    -- Job gets CPU (10 ms)
+    -- If job finishes, great, if not, reduce priority
+    -- When high priority queue is empty, run lower queue (100 ms)
+    -- If process STILL doesn't finish, move down again
+
+
+-----------------------
+Unix scheduler
+-----------------------
+  * Round robin with multi-level feedback queue
+
+  Low level scheduler:
+    * Runs at least q = 100ms, or sooner if CPU is idle
+
+    How it works:
+      1. Allocates CPU to highest priority process
+
+      2. "Run" process
+        -- Increment CPU usage counter (10 ms)
+
+      3. Run until
+        -- Time qunatum expires (q)
+        -- Process blocks
+        -- return from syscall with higher priority process in queue
+
+  High level scheduler:
+    * runs once a second
+
+    * Re-computes process priorities
+
+    Priority = CPU Usage + (BASE = 0) + (nice())
+
+

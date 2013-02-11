@@ -1,0 +1,29 @@
+-------------------
+Parallelism / Concurrency
+-------------------
+  Parallelism: True hardware parallelism
+
+  Concurrency: May run sequentially but will get the same results if run in parallel
+
+
+-------------------
+Critical section problem
+-------------------
+  * n processes all competing to use some shared data
+  * Each process has a code segment, called "critical section", in which shared data is accessed
+  * Problem ensure that when one process is executing in critical section, no other process is allowed to execute it's critical section
+
+  SOLUTION:
+    Three components
+      1. Mutual exclusion (No collisions)
+        -- P0 and P1 are in the critical section simultaneously 
+
+      2. Progress
+        Not stuck:
+          -- P1 is not interested in the critical section, and P0 is still blocked
+
+        Not deadlocked
+          -- P0 is blocked and P1 is blocked
+
+      3. Bounded waiting (No starvation)
+        -- P0 is blocked, P1 enters critical section repeatedly and indefinitely

@@ -1,0 +1,12 @@
+--------------------
+--------------------
+Critical section problem with two processes
+--------------------
+  Two processes are P0 & P1
+
+  Pi = Me
+  Pj = Other
+
+  "Lockstep" Synchronization
+    * P0 runs then must wait for P1 to run
+

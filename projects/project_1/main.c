@@ -1,7 +1,12 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
+#include <unistd.h>
 
-void processCommand(char *, char *);
+pid_t servers[10];
+pid_t children[10];
+
+void processCommand(char *, char *[]);
 
 void getCommand() {
   char line[200];
@@ -19,26 +24,38 @@ void getCommand() {
     i++;
     flags[i] = strtok(NULL, " ");
   }
-  processCommand(command, *flags);
+  processCommand(command, flags);
 
 }
 
-void processCommand(char* command, char* flags) {
+void createServer(char* params[]) {
+
+}
+
+void abortServer(pid_t serverPID) {
+}
+
+void processCommand(char* command, char* params[]) {
+
+  int i = 0;
+  
   if(strcmp(command, "createServer") == 0) {
-    printf("create server!");
+    createServer(params);
   } else if (strcmp(command, "abortServer") == 0) {
-    printf("abortServer");
+    
   } else if (strcmp(command, "displayStatus") == 0) {
-    printf("displayStatus");
+    /* displayStatus(char* params[]); */
   } else if (strcmp(command, "createProc") == 0) {
-    printf("createProc");
+    /* createProc(char* params[]); */
   } else if(strcmp(command, "abortProc") == 0) {
-    printf("abortProc");
+    /* abortProc(char* params[]); */
   } else {
     printf("Please enter a valid command.\n");
   }
 }
 
 int main() {
-  getCommand();
+  while(1) { 
+    getCommand();
+  }
 }

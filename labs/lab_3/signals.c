@@ -1,6 +1,7 @@
-
 #include <signal.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
 #include <sys/wait.h>
 #include <errno.h>
 #include <time.h>
@@ -77,7 +78,7 @@ static void signal_handler(int signo)
 			
 		//Exit
 		case SIGINT:		
-			kill(pid2, SIGTERM);
+			kill(getppid(), SIGTERM);
 			printf("\nShutting down... <ENTER>\n");
 			getchar();
 			

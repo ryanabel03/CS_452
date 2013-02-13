@@ -8,9 +8,7 @@ int main() {
 
   pid_t servers[10];
   int i = 0;
-  pid_t pid;
   int status;
-  ssize_t num;
   char str[1024];
   int fd[2];
 
@@ -18,76 +16,81 @@ int main() {
     perror("pipe error");
   }
 
-  if((pid = fork()) < 0) {
-    perror("fork error 1");
+  while(1) {
+    char* flags[5];
+    printf("Prompt: ");
+    fflush(stdout);
 
+    fgets(str, 1024, stdin);
+    fflush(stdout);
 
-  } else if(pid == 0) {
-    pid = getpid();
-    char* serverName;
-    pid_t childpid;
-    int minNum = 0;
-    int maxNum = 0;
-    int activeNum = 0;
-    char* flag[5];
+    if(strstr(str, "createServer") != NULL) {
+      if((servers[i] = fork()) < 0) {
+        perror("fork error 1");
+      } else if(servers[i] == 0) {
 
-    close(fd[1]);
+        char* serverName = NULL;
+        pid_t childpid;
+        int minNum = 0;
+        int maxNum = 0;
+        int activeNum = 0;
+        char* flag[5];
 
-    while(1) {
-      read(fd[0], str, sizeof(str));
+        while(1) {
+          close(fd[1]);
+          char str2[1024];
 
-      if(strstr(str, serverName) != NULL) {
-        printf("We have a match!");
-        fflush(stdout);
-      }
+          read(fd[0], str2, sizeof(str2));
 
-      if(strstr(str, "createServer") != NULL) {
-        printf("we will be creating a server today");
-        fflush(stdout);
-        char* throwaway = strtok(str, " ");
-        flag[0] = strtok(NULL, " ");
-
-        int m = 0;
-        while(flag[m] != NULL) {
-          m++;
-          flag[m] = strtok(NULL, " ");
-        }
-
-        minNum = atoi(flag[0]);
-        maxNum = atoi(flag[1]);
-        flag[2][strlen(flag[2]) - 1] = '\0';
-        serverName = flag[2];
-
-        while(i < minNum) {
+          printf("got string: %s", str2);
           fflush(stdout);
-          if((childpid = fork()) < 0) {
-            perror("fork error");
-          } else if(childpid == 0) {
-            childpid = getpid();
-            exit(status);
-          } else {
-            servers[i] = wait(&status);
-            i++;
+
+          if(strstr(str2, "createServer") != NULL) {
+            printf("we will be creating a server today\n");
+            fflush(stdout);
+            char* throwaway = strtok(str2, " ");
+            flag[0] = strtok(NULL, " ");
+
+            int m = 0;
+            while(flag[m] != NULL) {
+              m++;
+              flag[m] = strtok(NULL, " ");
+            }
+
+            minNum = atoi(flag[0]);
+            maxNum = atoi(flag[1]);
+            flag[2][strlen(flag[2]) - 1] = '\0';
+            serverName = flag[2];
+
+            int k = 0;
+            while(k < minNum) {
+              if((childpid = fork()) < 0) {
+                perror("fork error");
+              } else if(childpid == 0) {
+                childpid = getpid();
+                exit(status);
+              } else {
+                servers[k] = wait(&status);
+                k++;
+              }
+            }
+          } else if(strstr(str2, "abortServer") != NULL) {
+            printf("Server name: %s");
           }
         }
-      }
-    }
-    exit(status);
-  } else {
-    while(1) {
-      char* flags[5];
-      printf("Prompt: ");
-      fflush(stdout);
-
-      fgets(str, 1024, stdin);
-
-      close(fd[0]);
-
-      if(strstr(str, "createServer") != NULL) {
+      } else {
+        i++;
         write(fd[1], str, strlen(str) + 1);
       }
+    } else if(strstr(str, "abortServer") != NULL) {
+        int k = 0;
+        while(k < i) {
+          printf("putting %s in the pipe\n", str);
+          fflush(stdout);
+          write(fd[1], str, strlen(str) + 1);
+          k++;
+        }
     }
-    servers[i] = wait(&status);
   }
   return 0;
 }

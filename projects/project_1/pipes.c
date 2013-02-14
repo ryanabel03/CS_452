@@ -24,11 +24,6 @@ void createGrandChild(int fd2[10][2], int activeProcs) {
     char fromParent[1024];
     read(fd2[activeProcs][0], fromParent, sizeof(fromParent));
 
-    printf("Grand child received %s", fromParent);
-    fflush(stdout);
-
-    fromParent[strlen(fromParent) - 1] = '\0';
-
     if(strstr(fromParent, "kill") != NULL) {
       printf("Killing grandchild process\n");
       fflush(stdout);
@@ -93,11 +88,15 @@ void abortGrandChild(int fd[10][2], int numActive, int numMin, char* childToAbor
  *
  */
 void printServerStatus(char* serverName, pid_t serverId, pid_t children[10], int childrenNum) {
-  printf("SERVER:\t %s (%d)\n", serverName, serverId); 
-  int k = 0;
-  while(k < childrenNum) {
-    printf("----- Child %d (%d)\n", k + 1, children[k]);
-    k++;
+  if(serverName != NULL) {
+    printf("SERVER:\t %s (%d)\n", serverName, serverId); 
+    fflush(stdout);
+    int k = 0;
+    while(k < childrenNum) {
+      printf("----- Child %d (%d)\n", k + 1, children[k]);
+      fflush(stdout);
+      k++;
+    }
   }
   displayPrompt();
 }
@@ -108,7 +107,6 @@ int main() {
   char str[1024];
   int fd[5][2];
   int serverNum = 0;
-  int status;
   int child_index = -1;
 
   displayPrompt();
@@ -191,22 +189,21 @@ int main() {
 
           read(fd[child_index][0], fromPipe, sizeof(fromPipe));
           fromPipe[strlen(fromPipe) - 1] = '\0';
+          char* doNothing = strtok(fromPipe, " ");
 
           if(strstr(fromPipe, "abortServer") != NULL) {
-            char* doNothing = strtok(fromPipe, " ");
             char* serverToAbort = strtok(NULL, " ");
             abortServer(serverName, serverToAbort);
 
           } else if(strstr(fromPipe, "abortProc") != NULL) {
-            char* doNothing = strtok(fromPipe, " ");
             char* onServer = strtok(NULL, " ");
             abortGrandChild(fd2, activeProcs, minProcs, onServer, serverName);
+            activeProcs--;
 
           } else if(strstr(fromPipe, "displayStatus") != NULL) {
             printServerStatus(serverName, getpid(), child, activeProcs); 
 
           } else if(strstr(fromPipe, "createProc") != NULL) {
-            char* doNothing = strtok(fromPipe, " ");
             char* onServer = strtok(NULL, " ");
 
             //Special case: Must create new process without function call :(
@@ -225,6 +222,7 @@ int main() {
               if(child[activeProcs] == 0) {
                 printf("Creating grandchild for process %d\n", getppid());
                 fflush(stdout);
+                displayPrompt();
                 createGrandChild(fd2, activeProcs);
               }
 

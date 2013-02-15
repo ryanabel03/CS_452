@@ -1,0 +1,28 @@
+--------------------
+Peterson's algorithm
+--------------------
+  flag[]: indicate intent
+  turn: resolve ambiguity
+  
+  Mutual Exclusion:
+    Proof by contradiction:
+
+      Assume P0 & P1 are both in critical secction
+
+      flag[0] = flag[1] = true
+
+      Test for entry could not have been true for both at the same time
+        -- turn favors one or the other
+
+      If P0 enters first then P1 could not have turn == 1 and vice versa
+
+
+  Progress (stuck):
+    P0 is stuck & P1 is not interested
+      -- If P1 is not interested, flag[1] = false
+      -- Then P0 can't be stuck because the while is true
+
+  Progress (deadlock):
+    P0 and P1 are stuck at the while loop
+      -- Turn has a single value, so there is no way they can both not
+        execute the while loop

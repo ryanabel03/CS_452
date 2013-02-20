@@ -1,0 +1,48 @@
+---------------------
+Semaphores
+---------------------
+  * Shared integer variable
+  * Accessed ONLY through 2 atomic operations
+    1. signal
+      -- Increment semaphore
+    2. wait
+      -- while(s <= 0) do nothing and s--
+
+
+  Mutual Exclusion:
+    sem mutex = 1
+
+    wait(mutex)
+    Critical Section
+    signal(mutex)
+
+  
+  Implementation: 
+    * Disable interrupts
+      -- Not suggested
+    * Hardware solution
+      -- Semaphore == critical section
+
+
+---------------------
+Readers + writers
+---------------------
+  * wrt: Mutual exclusion for write
+  * mutex: only 1 reader can enter/exit at a time
+  * readCount: tracks the number of readers
+
+  * Readers can read and as many readers can read at a time
+  * Writers can be starved
+  
+
+---------------------
+Dining Philosophers
+---------------------
+
+  5 philosophers eat using chopsticks
+  
+  Philospher 0 must share a chopstick with philosopher 1 and philosopher 4
+
+
+  Philosphers may want to use chopsticks at the same time
+    -- Chopstick can be taken by another philosopher

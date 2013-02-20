@@ -26,3 +26,7 @@ Peterson's algorithm
     P0 and P1 are stuck at the while loop
       -- Turn has a single value, so there is no way they can both not
         execute the while loop
+
+  Bounding Wait:
+    P0 stuck, P1 executes repeatedly
+    Can't happen because turn variable will indicate P0 should run

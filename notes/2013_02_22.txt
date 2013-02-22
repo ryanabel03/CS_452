@@ -1,0 +1,58 @@
+-----------------------
+Resources
+-----------------------
+
+  Types:
+    * Classes (R)
+    * Units (r)
+    * Time (CPU), Space(m), Physical (Drive), Logical (Lock)
+
+  Properties:
+    * Reusable serially
+    * Discrete
+    * Bounded
+
+  Usage:
+    * Very similar to semaphores
+    1. Request
+    2. Use
+    3. Release
+
+
+  1. Make Request
+    -- If available Grant
+    -- Else wait
+
+
+-----------------------
+Conditions for deadlock in resources
+-----------------------
+  
+  1. Mutual Exclusion:
+    * Resource is owned by exactly one process
+
+  2. Hold & Wait:
+    * Process owns a resource
+    * Same process tries to request another resource
+
+  3. No Preemption:
+    * Cannot forcibly remove resource from process
+
+  4. Circular Wait:
+    * There is a cycle of processes
+
+
+-----------------------
+Dealing with deadlock
+-----------------------
+  1. Ignore the problem (Ostrich Algorithm)
+
+  2. Prevention
+    * Don't even allow deadlock to occur
+    * Deny 1 of the 4 necessary conditions
+
+  3. Avoidance
+    * Avoid unsafe states
+
+  4. Detect & Recover
+    * Check for deadlock once in a while

@@ -1,0 +1,65 @@
+---------------------------
+Main ideas
+---------------------------
+
+20 pts -- Threads
+  * State diagrams
+
+30 pts -- CPU Scheduling
+  * Metrics
+  * Algorithms
+
+30 pts -- Process Synchronization
+  * counter++ problem
+  * Requirements of Critical Section Problem
+  * Make / Break synchronization code
+  * Semaphores
+
+---------------------------
+Review Answers
+---------------------------
+  Chapt 1 & 2
+    1. False
+    2. True
+
+
+  Chapt 3
+    1. The process table holds a bunch of PCBs. A process table may not be needed
+       because we can only run 1 process at a time.
+
+    2. With pipes the operating system is responsible for delivering messages. This 
+       is unlike shared memory where a program needs to deliver messages.
+
+  
+  Chapt 4
+    1. Context switching for a thread only needs execution context (stack ptr, registers) whereas
+       context switching for a process needs the address space and can only be done through a kernel.
+
+    2. Single: (.75) * (20ms) + (.25) * (80ms) = 35ms/reqs = 28.5 req/sec
+       Multi: 20ms/reqs (based on steady stream, hiding latency) = 50 req/sec
+
+  Chapt 5
+    1. FCFS: P1, P2, P3, P4, P5
+       SJF: P2, P3, P4, P5, P1
+       RR: P1, P2, P3, P4, P5, P1, P2, P4, P5, P1, P1
+
+    2. In a multi leve queue the position of a process is fixed whereas it is not
+       in a feedback queue. Aging exploits this difference. 
+
+  Chapt 6:
+    1. a) P0 runs code 1 - 4, then context switch, then P1 will also get in CS
+       b) I) P1 not interested -> wantIn[1] = F, then P0 will always get in 
+          II) Both stuck in while loop -- Not possible because of waiter var
+       c) P0 runs code 1 & 2, P1 runs code 1, 2, & 3, P0 runs code 3, P1 runs another time BOOM roasted
+
+    2. sem nextVal = 1
+       derivative = 0 
+
+       Co-processor:              Processor:
+        wait(nextVal);              func=f(x)
+        diff = 1/f'(x)              wait(derivative)
+        signal(derivative)          x = (x - func) * diff
+                                    if( old_x < new_x) 
+                                      done
+                                    signal(nextVal)
+

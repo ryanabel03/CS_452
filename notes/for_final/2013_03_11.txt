@@ -1,0 +1,78 @@
+------------------------------------------
+Memory management background info
+------------------------------------------
+
+  Address Binding
+    * Where do we put an object
+    * What is the protocol for getting it back
+
+    Symbolic  -->   Relocatable     -->   Absolute
+      [x]           [ORIGIN + 24]         [0xF325F3F4]
+
+
+  Dynamic Linking
+    * Windows: dll
+    * Unix: shared objects (.so)
+
+    * Solves static problem of including same file multiple times.
+      -- Including math in multiple files in static linking brings in the entire math library to each file
+
+    Process:
+      * First time function is called, program must lookup the dll
+      * Any time after that, the reference has been created so it need not be done again
+
+    * Can NOT contain local variables because multiple processes will be accessing the same function simultaneously
+      -- Uses pointers to local variables in calling function
+
+    * Transparent -- OS Manages this
+
+
+  Swapping
+    * An entire process can be moved on/off disk
+
+  Paging
+    * Moving a portion of a process on/off disk
+
+
+------------------------------------------
+Memory Organization
+------------------------------------------
+
+  Time -------------->
+  ----------------------------------------------------------------------------
+  Single User   |                 Multi - Programmed                          |
+  ----------------------------------------------------------------------------
+                | Real Memory             |       Virtual mem                 |
+                --------------------------------------------------------------
+                | Fixed part | Var partit | Paged | Segmented | Combined      |
+                --------------------------------------------------------------
+
+  Assumptions:
+    1. Multi-programmed
+
+    2. Finite physical memory
+
+    3. Instructions & Data in memory
+        -- To the OS, everything is an address
+
+    4. Process is contiguous in memory
+        -- If removed, gives us paged
+
+    5. Entire process is in memory
+        -- If removed, gives us virtual memory
+
+
+
+------------------------------------------
+Single User
+------------------------------------------
+
+-------------------
+|                 |
+|     O.S.        |
+|                 |
+------------------- <- Fence Register
+|                 |
+|  Single User    |
+|                 |
+-------------------

@@ -1,0 +1,86 @@
+--------------------------------
+Fixed-sized partitions
+--------------------------------
+  * Memory is divided into fixed number of fixed sized regions (partitions)
+
+  * Degree of Multi-programming
+    -- How many paritions you can have on a system
+    -- Fixed
+    -- 1 Process per partition
+
+
+  Process:
+    CPU ---Logical Address---> +  Relocation Register (100 k) ----Physical Address---> Memory
+          [origin + 24 bytes]           + 100KB (part. loc.)          [100024]
+
+  Memory Management Unit:
+    * Contains relocation register
+      -- Contains location of partition in logical memory for example, O.S = 0 -- 100K, P1 = 100k -- 110K
+    * AKA BAR (Base Address Register)
+    * Translates logical address to physical address
+
+  Problems:
+    * Scheduling
+      -- How do I queue extra processes?
+    * Internal Fragmentation
+      -- Memory wasted inside a partition
+      -- A process may be allocated 10K but only use 8K, 2K is wasted
+
+
+--------------------------------
+Variable-sized partitions
+--------------------------------
+  * Memory is divided into variable number of variable sized partitions
+  * The size of a partition is the size of the process using it
+  * Only available in NON dynamic languages (FORTRAN)
+
+  Process:
+    * A program size 100 bytes
+
+    CPU ----Logical Address---> Limit Register --> Base Register ---Physical Address---> Memory
+              [24]                 < 100?             + 100K     
+
+    Limit Register:
+      * Check if address is less than limit
+      * If it is, pass to base register, if not error
+
+    Base = starting point
+    Limit = maximum size
+    Space = base + limit
+
+  Problems:
+    * External fragmentation
+      -- Memory outside of partition gets wasted 
+      -- Free space regions become unusably small
+    * Scheduling
+      -- Dynamic storage problem allocation problem
+
+  Scheduling Algorithms:
+    * First-fit
+      -- Put process in 1st partition big enough to hold it
+      -- Uses free list
+      -- Speedy
+
+    * Best-fit
+      -- Put process in smallest partition large enough to fit it
+      -- Memory utilization optimization
+
+    * Worst-fit
+      -- Put process in largest partition
+      -- Leaves a lot of space for expansion
+
+
+--------------------------------
+Paging
+--------------------------------
+  * Divide physical memory into frames
+    -- Must be power of 2 (usually 4KB)
+
+  * Divide logial memory into pages
+    -- Must be same size as the frame (usually 4KB)
+
+  * Allows us to drop pages into frames perfectly
+
+  * Keep track of free frames
+  * Program of n pages needs to find n free frames and load program into them
+  * Page table keeps track of where logical pages live in physical memory

@@ -1,0 +1,113 @@
+----------------------------
+Paging example
+----------------------------
+
+Ten line program:
+------- = frame break 
+
+Ln  Code                    Word #
+0   a                         000
+1   b       Page 0            001
+2   c                         010
+3   d                         011
+--------
+4   e
+5   f       Page 1
+6   g
+7   h
+-------
+8   i       Page 2
+9   j
+
+sizeof(page) = 4 bytes = 2^2 = sizeof(frame)
+  -- We need 2 bits to identify pages
+
+sizeof(mem) = 32 = 2^5
+  -- This means we need 5 bits to identify memory locations
+
+Physical Mem:
+                          Frame
+  ------------- 
+  |           | 0
+  |           | 1
+  |           | 2           0
+  |           | 3
+  ------------- 4
+  |    a      |
+  |    b      |             1
+  |    c      |
+  |    d      |
+  ------------- 8
+  |           |
+  |           |             2
+  |           |
+  ------------- 12
+  |           |
+  |           |             3
+  |           |
+  ------------- 16
+  |    i      |
+  |    j      |             4
+  |           |
+  ------------- 20
+  |   e       |
+  |   f       |
+  |   g       |
+  |   h       |
+  ------------- 24
+  |           |
+  |           |
+  |           |
+  -------------
+
+  Page table:
+  ------------- 0 
+  |           |
+  |    1      |
+  |           |
+  ------------- 1 
+  |           |
+  |    5      |
+  |           |
+  ------------- 2 
+  |           |
+  |    4      |
+  |           |
+  ------------- 3
+  |           |
+  |    -      |
+  |           |
+  -------------
+
+
+
+  To get at instruction 6:
+
+    address: 0001 10
+            |---| |-|
+              p    d
+
+    value of p will go into page table lookup
+      -- Result (in this case 1 => 5) will be put into frame lookup table
+
+    value of d will get put into the frame lookup table
+
+
+  Implementation:
+    Direct Mapping:
+      * Performance penalty
+        -- Must reference memory to get to the page table and again to read the code value
+
+    Associative Memory:
+      * Attempts to deal with direct memory performance penalty
+      * "Content Addressable" memory
+      * Key, Value
+        -- Key is page value (p)
+        -- Value is code value (f)
+      * PRO: Fast due to parallel pattern matching
+      * CON: very expensive $
+
+    Hybrid Memory:
+      * Combines Associative and Direct Mapping implementations
+      
+      

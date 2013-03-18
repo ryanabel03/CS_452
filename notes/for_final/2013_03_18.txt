@@ -1,0 +1,47 @@
+----------------------------
+Hybrid Memory (cont.)
+----------------------------
+  32 bit system = 2^32 addresses = 4 GB M / 4KB per page = 1 Mil pages
+  
+  Principle of Locality:
+
+    Spatial:
+      * Next reference will probably be near the last one
+
+    Temporal:
+      * If you just accessed some memory, you will probably access it again soon
+
+
+  The math:
+    d = Ms access time = 80ns
+    e = tlb access time = 10ns
+    a = hit ratio = .98
+
+    m = a * (e + d)   +   (1 - a)   *   (e + d + d)
+          - hit -         -tlb find-      -miss-
+
+      
+      = .98 * (10 + 80) + (1 - .98) * (10 + 80 + 80) = 91.6 ns
+
+
+----------------------------
+Page sharing
+----------------------------
+  * Make sure the same entries in the page tables point to the same information
+
+
+----------------------------
+Multi-level paging
+----------------------------
+  * Reduces RAM footprint of page table
+
+  * Use outer table
+    -- Instead of 1 table with 1 million entries, 1 table with 1000 entries that points to another table with 1000 entries
+
+  * Uses 2000 entries instead of 1 million entries
+    -- 1000 outer entries and 1 of the inner tables of 1000 entries
+
+  Changes translation from logical memory to physical memory:
+    - dir = outer page table
+    - p = inner page table
+    - d = offset

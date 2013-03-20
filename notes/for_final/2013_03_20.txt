@@ -1,0 +1,40 @@
+-------------------------------
+Segmentation
+-------------------------------
+  * Functional view of memory
+  * Dynamic storage allocation problem
+
+
+-------------------------------
+Combined
+-------------------------------
+  * Page the segments
+
+
+   16  16           6  10   16
+  ---------       -------------
+  | s | d |   =>  | s | p | d |
+  ---------       -------------
+
+  where s = stack
+
+
+
+
+-------------------------------
+Chapter 7 Concepts
+-------------------------------
+  Internal fragmentation
+  How memory evolved
+  Binary implementation (mapping of bits)
+  Performance impact
+
+
+-------------------------------
+Virtual Memory
+-------------------------------
+  Logical Memory is WAY bigger than Physical memory
+
+  1. Process wants something in RAM
+  2. If not in RAM, suspend process and go get it
+  3. Wake process up

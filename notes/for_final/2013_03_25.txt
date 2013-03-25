@@ -1,0 +1,41 @@
+----------------------------------
+Virtual memory
+----------------------------------
+
+  Pros:
+    * Logical Adress space >> Physical address space
+    * Increased efficiency
+    * Increased multi-programming
+    * Less I/O
+
+  Cons:
+    * Unpredictable runtimes
+
+  Page fault:
+    - Reference to page not yet in memory
+
+  Demand paging:
+    - Only bring page into memory when needed
+
+
+  Went over page fault example
+    -- Look up page in page table
+    -- Find frame in physical memory
+    -- If not resident yet, trap to OS
+    -- Suspend process and get data from Disk
+    -- Put page into physical memory
+    -- Grab page from physical memory and map it to page table
+    -- Resume instruction
+
+
+  Utilizes:
+    * Context switch
+    * CPU burst - I/O burst
+    * Semaphore
+    * DMA / Interrupt
+    * States (Running, blocked, ready)
+
+  * Encourages overallocation
+
+  * Page replacement
+    -- Choose a victim

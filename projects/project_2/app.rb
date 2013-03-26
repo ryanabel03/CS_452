@@ -5,3 +5,14 @@ require_relative "presenter.rb"
 @presenter.next_line
 @presenter.next_line
 @presenter.next_line
+@presenter.next_line
+@presenter.next_line
+@presenter.next_line
+@presenter.next_line
+@presenter.next_line
+@presenter.next_line
+@presenter.next_line
+@presenter.next_line
+@presenter.next_line
+@presenter.next_line
+@presenter.next_line

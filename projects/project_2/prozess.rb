@@ -1,15 +1,8 @@
-class Process
+class Prozess
+  attr_accessor :name
   def initialize(name)
     @name = name
     @resources = [] 
-  end
-
-  def name(n)
-    @name = n
-  end
-
-  def name
-    @name
   end
 
   def resources

@@ -1,4 +1,4 @@
-@presenter = Presenter.new
+# @presenter = Presenter.new
 
 Shoes.app {
   @step = button "Step"

@@ -1,0 +1,37 @@
+---------------------------
+Page replacement
+---------------------------
+
+  * Choose a victim
+  
+  * Find a page in memory, not in use
+
+  Performance:
+    * # of page faults
+  
+  Page reference string: "0 1 2 3 0 1 4 0 1 2 3 4"
+
+  * Considering page references only, this is why we don't see hex values etc.
+  * Compress consecutive page references: 0 0 0 0 -> 0
+  * Demanding paging & local page replacement
+
+
+  Strategies:
+    First In First Out:
+      * Replace "oldest" page
+      * Use queue or logical time
+      
+      Pros:
+        * Easy to implement
+
+      Cons:
+        - Inefficient
+        - Beladys Anomaly
+          * Reducing frames reduces the number of faults
+
+    Optimal:
+      * Replace the page that WONT be used for the longest time
+      * Impossible
+
+    Least Recently Used (LRU):
+      * Replace the page that HASNT been used for the longest time

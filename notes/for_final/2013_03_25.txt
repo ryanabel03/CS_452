@@ -36,6 +36,3 @@ Virtual memory
     * States (Running, blocked, ready)
 
   * Encourages overallocation
-
-  * Page replacement
-    -- Choose a victim

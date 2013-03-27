@@ -1,0 +1,31 @@
+#!/bin/bash
+if [ -z "$JAVACMD" ] ; then
+  if [ -z "$JAVA_HOME" ] ; then
+    JAVACMD='java'
+  else
+    JAVACMD="$JAVA_HOME/bin/java"
+  fi
+fi
+
+ROOT="`dirname $0`/.."
+JRUBY_COMPLETE="$ROOT/project_2/jruby-complete-1.7.0.jar"
+
+export GEM_HOME="$ROOT/vendor/gem_home"
+export GEM_PATH="$ROOT/vendor/gem_home"
+export PATH="$GEM_HOME/bin:$PATH"
+export DISPLAY=:0
+
+if [ -z "$DEVELOPMENT" ] ; then
+  JVM_SERVER_CLIENT_FLAG='-server'
+else
+  JVM_SERVER_CLIENT_FLAG='-client'
+fi
+cmd="$JAVACMD -Xmx500m -Xss2048k $JVM_SERVER_CLIENT_FLAG -d32 -jar $JRUBY_COMPLETE $@"
+# -Xdebug -Xrunjdwp:transport=dt_socket,address=8000,server=y,suspend=n
+# echo $cmd
+
+if [[ "$JAVACMD" =~ drip ]]; then
+  echo "(Using drip)"
+fi
+exec $cmd
+

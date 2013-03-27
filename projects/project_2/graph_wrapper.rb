@@ -1,6 +1,5 @@
 require 'rgl/adjacency'
 require 'rgl/dot'
-require_relative 'graph_printer.rb'
 
 class GraphWrapper
 

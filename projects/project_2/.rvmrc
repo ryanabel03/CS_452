@@ -1,1 +1,1 @@
-rvm use 1.9.3@os_proj_3 --create
+rvm use jruby-1.7.0@os_proj_3 --create

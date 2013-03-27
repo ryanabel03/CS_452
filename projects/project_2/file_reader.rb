@@ -4,6 +4,7 @@ class FileReader
     @file = File.open(file, "r")
     @lines = @file.readlines
     @count = 0
+    @size = @lines.size
   end
 
   def read_next_line
@@ -17,7 +18,7 @@ class FileReader
   end
 
   def size
-    @lines.size
+    @size
   end
 
   def count

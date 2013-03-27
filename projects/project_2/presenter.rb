@@ -24,6 +24,14 @@ class Presenter
     end
   end
 
+  def current_line
+    @file_reader.count
+  end
+
+  def total_lines
+    @file_reader.size
+  end
+
   def determine_action(line_hash)
     process_name = line_hash[:process_name]
     action = line_hash[:action]

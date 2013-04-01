@@ -12,3 +12,21 @@ function addResource(process, resource) {
 function removeResource(process, resource) {
   process["resource"] = null;
 }
+
+function exists(process, processes) {
+  for(var index in processes) {
+    if(processes[index]["name"] == process) {
+      return true;
+    }
+  }
+  return false;
+}
+
+function findProcess(process, processes) {
+  for(var index in processes) {
+    if(processes[index]["name"] == process) {
+      return processes[index];
+    }
+  }
+  return null;
+}

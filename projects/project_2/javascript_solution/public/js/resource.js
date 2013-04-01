@@ -1,6 +1,7 @@
 function createResource(pName) {
   hash = {};
   hash["name"] = pName;
+  hash["waitingProcs"] = [];
 
   return hash;
 }
@@ -24,4 +25,22 @@ function removeProcess(resource) {
   }
 
   return resource;
+}
+
+function exists(resource, resources) {
+  for(var index in resources) {
+    if(resources[index]["name"] == resource) {
+      return true;
+    }
+  }
+  return false;
+}
+
+function findResource(resource, resources) {
+  for(var index in resources) {
+    if(resources[index]["name"] == resource) {
+      return resources[index];
+    }
+  }
+  return null;
 }

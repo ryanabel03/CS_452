@@ -7,17 +7,15 @@ function createGraph() {
   return new Graph();
 }
 
-function addNode(graph, name) {
+function addNode(name) {
   graph.addNode(name, {label: name});
-  return graph;
 }
 
-function addEdge(graph, source, target) {
+function addEdge(source, target) {
   graph.addEdge(source, target, {directed: true});
-  return graph;
 }
 
-function show(graph) {
+function show() {
   if(!layouter) {
     layouter = new Graph.Layout.Spring(graph);
   } else {
@@ -35,7 +33,7 @@ function show(graph) {
 /*
 * Get all nodes that have no incoming edges 
 */
-function getEmptyNodes(graph) {
+function getEmptyNodes() {
   result = [];
 
   for(var key in graph.nodes) {
@@ -59,7 +57,7 @@ function getEmptyNodes(graph) {
 /*
 * Get all nodes that node is pointing to 
 */
-function nodesFromNode(graph, node){
+function nodesFromNode(node){
   connected = [];
 
   for(var i = 0; i < node.edges.length; i++) {
@@ -72,7 +70,7 @@ function nodesFromNode(graph, node){
   return connected;
 }
 
-function removeEdgeFromGraph(edge, graph) {
+function removeEdgeFromGraph(edge) {
   for(var i = 0; i < graph.edges.length; i++) {
     currentEdge = graph.edges[i];
 
@@ -80,7 +78,6 @@ function removeEdgeFromGraph(edge, graph) {
       removedEdges.push(edge);
     }
   }
-  return graph;
 }
 
 /*
@@ -117,9 +114,9 @@ function hasNoIncomingEdges(node) {
   return false;
 }
 
-function isThereCycle(graph) {
+function isThereCycle() {
   emptyNodes = [];
-  emptyNodes = getEmptyNodes(graph); 
+  emptyNodes = getEmptyNodes(); 
   sorted = [];
 
   for(var i = 0; i < emptyNodes.length; i++) {
@@ -127,12 +124,12 @@ function isThereCycle(graph) {
 
     sorted.push(node);
 
-    nodes = nodesFromNode(graph, node);
+    nodes = nodesFromNode(node);
 
     for(var j = 0; j < nodes.length; j++) {
       newNode = nodes[j];
       edge = connectingEdge(node, newNode);
-      removeEdgeFromGraph(edge, graph);
+      removeEdgeFromGraph(edge);
 
       if(hasNoIncomingEdges(newNode)) {
         console.log("No more incoming edges");
@@ -141,7 +138,7 @@ function isThereCycle(graph) {
   }
 }
 
-function detectCycle(graph, node) {
+function detectCycle(node) {
   set.push(node);
 
   for(var i = 0; i < graph.edges.length; i++) {

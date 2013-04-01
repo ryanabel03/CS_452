@@ -1,9 +1,8 @@
 processes = [];
 resources = [];
-graph = null;
 
 $(document).ready( function () {
-  graph = createGraph();
+    graph = createGraph();
 
   $("#step-button").click(function() {
     count = currentCount(); 

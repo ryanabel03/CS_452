@@ -1,0 +1,19 @@
+----------------------------------
+Unix page replacement
+----------------------------------
+
+  Global Page Recovery:
+    * Variation of clock algorithm
+    * Scan frames circularly
+    * When free frame pool < Threshold
+      -- Page stealer daemon activates
+          * If the refbit = 1, set to 0
+          * If the refbit = 0, move page to free frame list
+
+
+
+    Page buffering: 
+      * Place recovered pages in end of free frame list.
+      * If a page gets all the way to the top, you can replace it.
+
+    Most systems have a free list and a dirty free list

@@ -2,96 +2,6 @@ layouter = null;
 renderer = null;
 set = [];
 
-/*
-* Get all nodes that node is pointing to 
-*/
-function nodesFromNode(node){
-  connected = [];
-
-  for(var i = 0; i < node.edges.length; i++) {
-    edge = node.edges[i];
-    if(edge.source.id == node.id) {
-      connected.push(edge.target);
-    }
-  }
-
-  return connected;
-}
-
-function removeEdgeFromGraph(edge) {
-  for(var i = 0; i < graph.edges.length; i++) {
-    currentEdge = graph.edges[i];
-
-    if(currentEdge.source.id == edge.source.id && currentEdge.target.id == edge.target.id && removedEdges.indexOf(edge) == -1) {
-      removedEdges.push(edge);
-    }
-  }
-}
-
-/*
-* Get the edge that connects the source to the target
-*/
-function connectingEdge(from, to) {
-  for(var i = 0; i < graph.edges.length; i++) {
-    edge = graph.edges[i];
-    if(edge.source.id == from.id && edge.target.id == to.id) {
-      return edge;
-    }
-  }
-  return null;
-}
-
-/*
-* Returns true if a node has incoming edges, false otherwise
-*/
-function hasNoIncomingEdges(node) {
-  if(node.edges.length == 0) {
-    return true;
-  }
-
-  for(var i = 0; i < node.edges.length; i++) {
-    nodeEdge = node.edges[i];
-    for(var j = 0; j < removedEdges.length; j++) {
-      remEdge = removedEdges[j];
-
-      if(nodeEdge.source.id == remEdge.source.id && nodeEdge.target.id == remEdge.target.id) {
-        return true;
-      }
-    }
-  }
-  return false;
-}
-
-function graphHasCycle() {
-  for(var key in graph.nodes) {
-    node = graph.nodes[key];
-
-    for(var i = 0; i < node.edges.length; i++) {
-      edge = node.edges[i];
-
-      if(removedEdges.indexOf(edge) == -1) {
-        return true;
-      }
-    }
-  }
-  return false;
-}
-
-function nodeExists(nodes, node) {
-  for(var i = 0; i < nodes.length; i++) {
-    if(nodes[i].id == node.id) {
-      return true;
-    }
-  }
-  return false;
-}
-
-
-/*****************************************************
-* Officially completed code BENEATH
-*****************************************************/
-
-
 //
 // Create a new graph object
 //
@@ -145,7 +55,6 @@ function removeEdgeFromNodes(from, to) {
         edge = node.edges[i];
 
         if(edge.source.id == from && edge.target.id == to) {
-          console.log("Removing edge from nodes", edge);
           node.edges.splice(i, 1);
         }
       }
@@ -161,7 +70,6 @@ function removeEdgeFromGraph(from, to) {
   for(var i = 0; i < graph.edges.length; i++) {
     edge = graph.edges[i];
 
-    console.log(edge.source.id, " TO ", edge.target.id);
     if(edge.source.id == from && edge.target.id == to) {
       edge.hide();
       graph.edges.splice(i, 1);
@@ -245,8 +153,9 @@ function getRemovedEdgeCountFor(node, removedEdges) {
 */
 function hasNoInDegree(node, removedEdges) {
   removedCount = getRemovedEdgeCountFor(node, removedEdges);
-  console.log(removedCount);
-  if(graph.nodes[node.id].edges.length - removedCount == 0) {
+  outgoingEdgesCount = findAllNodesWithEdgeFrom(node.id).length; 
+
+  if(graph.nodes[node.id].edges.length - (removedCount + outgoingEdgesCount) == 0) {
     return true;
   } else {
     return false;
@@ -280,7 +189,7 @@ function checkForCycle() {
     i++;
   }
 
-  if(removedEdges.length - graph.edges.length > 0) {
+  if(graph.edges.length - removedEdges.length > 0) {
     console.log("Cycle!");
   } else {
     console.log("No cycle!");

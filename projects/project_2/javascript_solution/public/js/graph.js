@@ -74,7 +74,7 @@ function removeEdgeFromGraph(edge) {
   for(var i = 0; i < graph.edges.length; i++) {
     currentEdge = graph.edges[i];
 
-    if(currentEdge.source.id == edge.source.id && currentEdge.target.id == edge.target.id) {
+    if(currentEdge.source.id == edge.source.id && currentEdge.target.id == edge.target.id && removedEdges.indexOf(edge) == -1) {
       removedEdges.push(edge);
     }
   }
@@ -114,6 +114,21 @@ function hasNoIncomingEdges(node) {
   return false;
 }
 
+function graphHasCycle() {
+  for(var key in graph.nodes) {
+    node = graph.nodes[key];
+
+    for(var i = 0; i < node.edges.length; i++) {
+      edge = node.edges[i];
+
+      if(removedEdges.indexOf(edge) == -1) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
 function isThereCycle() {
   emptyNodes = [];
   emptyNodes = getEmptyNodes(); 
@@ -130,34 +145,32 @@ function isThereCycle() {
       newNode = nodes[j];
       edge = connectingEdge(node, newNode);
       removeEdgeFromGraph(edge);
+      console.log(removedEdges);
 
       if(hasNoIncomingEdges(newNode)) {
-        console.log("No more incoming edges");
+        sorted.push(newNode);
       }
     }
+  }
+  if(graphHasCycle()) {
+    console.log("Cycle!");
+    return true;
+  } else {
+    console.log("No Cycle!");
+    return false;
   }
 }
 
-function detectCycle(node) {
-  set.push(node);
-
+function removeEdge(from, to) {
   for(var i = 0; i < graph.edges.length; i++) {
-    visited = false;
     edge = graph.edges[i];
 
-    if(edge.source.id == node) {
-      for(var j = 0; j < set.length; j++) {
-        if(set[j] == edge.source.id) {
-          visited = true;
-        }
-      }
+    console.log("Want: ", from, " -- ", to);
+    console.log("Got: ", edge.source.id, " -- ", edge.target.id);
 
-      if(visited) {
-        console.log("Found cycle!");
-        return true;
-      }
+    if(edge.source.id == from && edge.target.id == to) {
+      graph.edges[i].hide();
+      graph.edges.splice(i, 1);
     }
   }
-  console.log("No cycle");
-  return false;
 }

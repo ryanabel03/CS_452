@@ -11,14 +11,14 @@ $(document).ready( function () {
     if(count == 0) {
       loadFile();
       line = nextLine();
-    } else if (count <= 2) {
+    } else if (count <= 1) {
       line = nextLine();
       //Parse header
     } else if (count < total) {
       line = nextLine();
       hash = parseLine(line);
       executeRequest(hash);
-      isThereCycle(graph);
+      // isThereCycle(graph);
       show(graph);
     } else {
       alert("You have reached the end of the file");
@@ -36,7 +36,7 @@ function executeRequest(hash) {
   resource = hash["resource"];
 
   if(!exists(process, processes)) {
-     addNode(process);
+    addNode(process);
     process = createProcess(process);
     processes.push(process);
   } else {
@@ -44,7 +44,7 @@ function executeRequest(hash) {
   }
 
   if(!exists(resource, resources)) {
-     addNode(resource);
+    addNode(resource);
     resource = createResource(resource);
     resources.push(resource);
   } else {
@@ -66,7 +66,12 @@ function doAction(process, action, resource) {
       }
       break;
     case "releases":
+      removeEdge(resource["name"], resource["process"]["name"]);
       resource = removeProcess(resource);
+      if(resource["process"]) {
+        removeEdge(resource["process"]["name"], resource["name"]);
+        addEdge(resource["name"], resource["process"]["name"]);
+      }
       break;
   }
 }

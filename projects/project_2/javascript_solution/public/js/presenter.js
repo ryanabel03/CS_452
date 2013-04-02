@@ -18,7 +18,7 @@ $(document).ready( function () {
       line = nextLine();
       hash = parseLine(line);
       executeRequest(hash);
-      // isThereCycle(graph);
+      checkForCycle();
       show(graph);
     } else {
       alert("You have reached the end of the file");
@@ -58,16 +58,17 @@ function doAction(process, action, resource) {
   switch(action) {
     case "requests":
       if(resource["process"]) {
-         addEdge(process["name"], resource["name"]);
+        addEdge(process["name"], resource["name"]);
         resource = addWaitingProc(resource, process);
       } else {
-         addEdge(resource["name"], process["name"]);
+        addEdge(resource["name"], process["name"]);
         resource = setProcess(resource, process);
       }
       break;
     case "releases":
       removeEdge(resource["name"], resource["process"]["name"]);
       resource = removeProcess(resource);
+
       if(resource["process"]) {
         removeEdge(resource["process"]["name"], resource["name"]);
         addEdge(resource["name"], resource["process"]["name"]);

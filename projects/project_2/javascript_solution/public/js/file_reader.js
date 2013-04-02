@@ -7,7 +7,7 @@ $ = jQuery
 
 function setLines(data) {
   file = data.split("\n");
-  total = file.length;
+  total = file.length - 1;
 }
 
 function totalCount() {

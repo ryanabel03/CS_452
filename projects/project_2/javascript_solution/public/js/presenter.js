@@ -18,14 +18,21 @@ $(document).ready( function () {
       line = nextLine();
       hash = parseLine(line);
       executeRequest(hash);
-      checkForCycle();
       show(graph);
+
+      if(isCycle()) {
+        alert("Detected a cycle!");
+      }
+
     } else {
       alert("You have reached the end of the file");
     }
 
+
     $("#count-text").show();
     $("#count-text").html("Line " + count + " of " + total);
+
+    $("#last-action-text").html("Processed line: " + line);
   });
 
 });
@@ -60,19 +67,28 @@ function doAction(process, action, resource) {
       if(resource["process"]) {
         addEdge(process["name"], resource["name"]);
         resource = addWaitingProc(resource, process);
+
+        $("#last-result-text").html(process["name"] + " Requested (but does not own) " + resource["name"]);
       } else {
         addEdge(resource["name"], process["name"]);
         resource = setProcess(resource, process);
+
+        $("#last-result-text").html(process["name"] + " Now owns " + resource["name"]);
       }
       break;
     case "releases":
       removeEdge(resource["name"], resource["process"]["name"]);
+      htmlText = resource["process"]["name"] + " Released " + resource["name"];
+
       resource = removeProcess(resource);
 
       if(resource["process"]) {
         removeEdge(resource["process"]["name"], resource["name"]);
         addEdge(resource["name"], resource["process"]["name"]);
+        htmlText += " AND " + resource["process"]["name"] + " Now owns " + resource["name"];
       }
+
+      $("#last-result-text").html(htmlText);
       break;
   }
 }

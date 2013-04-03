@@ -1,6 +1,5 @@
 layouter = null;
 renderer = null;
-set = [];
 
 //
 // Create a new graph object
@@ -163,7 +162,7 @@ function hasNoInDegree(node, removedEdges) {
 }
 
 
-function checkForCycle() {
+function isCycle() {
   sorted = [];
   removedEdges = [];
   emptyNodes = getNodesWithNoInDegree();
@@ -190,8 +189,8 @@ function checkForCycle() {
   }
 
   if(graph.edges.length - removedEdges.length > 0) {
-    console.log("Cycle!");
+    return true;
   } else {
-    console.log("No cycle!");
+    return false;
   }
 }

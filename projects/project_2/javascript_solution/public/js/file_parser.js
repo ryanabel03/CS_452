@@ -1,3 +1,7 @@
+/*
+* Responsible for parsing a line in a file
+*
+*/
 function parseHeader(line) {
   //Do nothing for now
 }

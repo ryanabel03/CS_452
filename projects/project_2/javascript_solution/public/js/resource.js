@@ -1,3 +1,10 @@
+/*
+* All the functions related to resources
+*/
+
+/*
+* Create a new resource
+*/
 function createResource(pName) {
   hash = {};
   hash["name"] = pName;
@@ -6,17 +13,29 @@ function createResource(pName) {
   return hash;
 }
 
+
+/*
+* Add a process to the waiting queue
+*/
 function addWaitingProc(resource, process) {
   resource["waitingProcs"].push(process);
 
   return resource;
 }
 
+
+/*
+* Set the owner process of the resource
+*/
 function setProcess(resource, process) {
   resource["process"] = process;
   return resource;
 }
 
+
+/*
+* Remove the owner process And possibly set new process as owner
+*/
 function removeProcess(resource) {
   if(resource["waitingProcs"]) {
     resource["process"] = resource["waitingProcs"].reverse().pop();
@@ -27,6 +46,9 @@ function removeProcess(resource) {
   return resource;
 }
 
+/*
+* Check if a resource already exists
+*/
 function exists(resource, resources) {
   for(var index in resources) {
     if(resources[index]["name"] == resource) {
@@ -36,6 +58,9 @@ function exists(resource, resources) {
   return false;
 }
 
+/*
+* Find an exisiting resource
+*/
 function findResource(resource, resources) {
   for(var index in resources) {
     if(resources[index]["name"] == resource) {

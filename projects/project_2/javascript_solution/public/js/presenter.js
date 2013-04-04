@@ -1,9 +1,16 @@
+/*
+* This group of function is responsible for delegating tasks to other files and altering the view
+*/
+
+// Globals
 processes = [];
 resources = [];
 
+// Do all things when the document is loaded
 $(document).ready( function () {
      graph = createGraph();
 
+  //Click the step button
   $("#step-button").click(function() {
     count = currentCount(); 
     total = totalCount();
@@ -37,6 +44,9 @@ $(document).ready( function () {
 
 });
 
+/*
+* Add or find processes and resources for the current line
+*/
 function executeRequest(hash) {
   process = hash["process"];
   action = hash["action"];
@@ -61,6 +71,9 @@ function executeRequest(hash) {
   doAction(process, action, resource);
 }
 
+/*
+* Determine the correct action to take and execute it
+*/
 function doAction(process, action, resource) {
   switch(action) {
     case "requests":

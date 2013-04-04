@@ -1,3 +1,9 @@
+/*
+* This group of functions is responsible in handling graph operations
+*
+*/
+
+//Singletons
 layouter = null;
 renderer = null;
 
@@ -162,6 +168,9 @@ function hasNoInDegree(node, removedEdges) {
 }
 
 
+/*
+* Determine if there is a cycle in the graph
+*/
 function isCycle() {
   sorted = [];
   removedEdges = [];
